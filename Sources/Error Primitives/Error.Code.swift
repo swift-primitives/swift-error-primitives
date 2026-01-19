@@ -44,13 +44,13 @@ extension Error {
 extension Error.Code {
     /// The POSIX errno value, if this is a POSIX error.
     @inlinable
-    public var posixValue: Int32? {
+    public var posix: Int32? {
         if case .posix(let v) = self { v } else { nil }
     }
 
     /// The Win32 error code, if this is a Windows error.
     @inlinable
-    public var win32Value: UInt32? {
+    public var win32: UInt32? {
         if case .win32(let v) = self { v } else { nil }
     }
 

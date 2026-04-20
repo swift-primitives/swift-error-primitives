@@ -14,8 +14,8 @@ import Error_Primitives
 
 @Suite("Error.Code Tests")
 struct ErrorCodeTests {
-    @Test("POSIX code storage")
-    func posixCode() {
+    @Test
+    func `POSIX code storage`() {
         let code = Error.Code.posix(2) // ENOENT
         #expect(code.posixValue == 2)
         #expect(code.win32Value == nil)
@@ -23,8 +23,8 @@ struct ErrorCodeTests {
         #expect(!code.isWin32)
     }
 
-    @Test("Win32 code storage")
-    func win32Code() {
+    @Test
+    func `Win32 code storage`() {
         let code = Error.Code.win32(2) // ERROR_FILE_NOT_FOUND
         #expect(code.win32Value == 2)
         #expect(code.posixValue == nil)
@@ -32,8 +32,8 @@ struct ErrorCodeTests {
         #expect(!code.isPosix)
     }
 
-    @Test("Code equality")
-    func equality() {
+    @Test
+    func `Code equality`() {
         let a = Error.Code.posix(1)
         let b = Error.Code.posix(1)
         let c = Error.Code.posix(2)
@@ -44,8 +44,8 @@ struct ErrorCodeTests {
         #expect(a != d) // Different enum cases
     }
 
-    @Test("Code description")
-    func description() {
+    @Test
+    func `Code description`() {
         let posix = Error.Code.posix(13)
         let win32 = Error.Code.win32(5)
 
@@ -56,8 +56,8 @@ struct ErrorCodeTests {
 
 @Suite("Error.Context Tests")
 struct ErrorContextTests {
-    @Test("Context storage")
-    func contextStorage() {
+    @Test
+    func `Context storage`() {
         let context = Error.Context(
             operation: "open",
             function: "readFile()",
@@ -71,8 +71,8 @@ struct ErrorContextTests {
         #expect(context.line == 42)
     }
 
-    @Test("Context description")
-    func contextDescription() {
+    @Test
+    func `Context description`() {
         let context = Error.Context(
             operation: "write",
             function: "saveData()",

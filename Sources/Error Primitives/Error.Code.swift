@@ -9,7 +9,7 @@
 //
 // ===----------------------------------------------------------------------===//
 
-extension Error {
+extension Error_Primitives.Error {
     /// Unified platform error code (errno / Win32 last-error).
     ///
     /// Data-only: stores the raw platform error code without any platform dependencies.
@@ -44,13 +44,13 @@ extension Error {
 extension Error.Code {
     /// The POSIX errno value, if this is a POSIX error.
     @inlinable
-    public var posixValue: Int32? {
+    public var posix: Int32? {
         if case .posix(let v) = self { v } else { nil }
     }
 
     /// The Win32 error code, if this is a Windows error.
     @inlinable
-    public var win32Value: UInt32? {
+    public var win32: UInt32? {
         if case .win32(let v) = self { v } else { nil }
     }
 
@@ -70,10 +70,12 @@ extension Error.Code {
 // MARK: - CustomStringConvertible
 
 extension Error.Code: CustomStringConvertible {
+    /// A textual representation of this error code.
     public var description: Swift.String {
         switch self {
         case .posix(let code):
             return "posix(\(code))"
+
         case .win32(let code):
             return "win32(\(code))"
         }

@@ -9,7 +9,7 @@
 //
 // ===----------------------------------------------------------------------===//
 
-extension Error {
+extension Error_Primitives.Error {
     /// Diagnostic context for error debugging.
     ///
     /// Captures call-site information when an error is created, providing
@@ -21,7 +21,7 @@ extension Error {
     /// let context = Error.Context(
     ///     operation: "open",
     ///     function: "readFile",
-    ///     fileID: "MyModule/File.swift",
+    ///     file: .init(id: "MyModule/File.swift"),
     ///     line: 42
     /// )
     /// ```
@@ -32,8 +32,8 @@ extension Error {
         /// The function name where the error was captured.
         public let function: Swift.String
 
-        /// The file ID where the error was captured.
-        public let fileID: Swift.String
+        /// The source file where the error was captured.
+        public let file: File
 
         /// The line number where the error was captured.
         public let line: UInt32
@@ -43,18 +43,18 @@ extension Error {
         /// - Parameters:
         ///   - operation: The operation being performed.
         ///   - function: The function name (typically from `#function`).
-        ///   - fileID: The file ID (typically from `#fileID`).
+        ///   - file: The captured file identity (typically `.init(id: #fileID)`).
         ///   - line: The line number (typically from `#line`).
         @inlinable
         public init(
             operation: Swift.String,
             function: Swift.String,
-            fileID: Swift.String,
+            file: File,
             line: UInt32
         ) {
             self.operation = operation
             self.function = function
-            self.fileID = fileID
+            self.file = file
             self.line = line
         }
     }
@@ -63,7 +63,8 @@ extension Error {
 // MARK: - CustomStringConvertible
 
 extension Error.Context: CustomStringConvertible {
+    /// A textual representation of this error context.
     public var description: Swift.String {
-        "\(operation) at \(function) (\(fileID):\(line))"
+        "\(operation) at \(function) (\(file.id):\(line))"
     }
 }
